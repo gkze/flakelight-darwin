@@ -16,6 +16,7 @@
   outputs =
     { flakelight, nix-darwin, ... }@inputs:
     flakelight ./. {
+      nixDir = ./.;
       imports = [ flakelight.flakelightModules.extendFlakelight ];
       flakelightModule =
         { lib, ... }:
