@@ -13,25 +13,18 @@
     };
   };
 
-  outputs =
-    { flakelight, nix-darwin, ... }@inputs:
+  outputs = { flakelight, nix-darwin, ... }@inputs:
     flakelight ./. {
-      nixDir = ./.;
       imports = [ flakelight.flakelightModules.extendFlakelight ];
       templates = import ./templates;
-      flakelightModule =
-        { lib, ... }:
-        {
-          imports = [
-            ./flakelight-darwin/darwinModules.nix
-            ./flakelight-darwin/darwinConfigurations.nix
-          ];
-          inputs.nix-darwin = lib.mkDefault nix-darwin;
-          systems = [
-            "aarch64-darwin"
-            "x86_64-darwin"
-          ];
-        };
+      flakelightModule = { lib, ... }: {
+        imports = [
+          ./flakelight-darwin/darwinModules.nix
+          ./flakelight-darwin/darwinConfigurations.nix
+        ];
+        inputs.nix-darwin = lib.mkDefault nix-darwin;
+        systems = [ "aarch64-darwin" "x86_64-darwin" ];
+      };
 
       outputs.tests = import ./tests inputs;
     };
