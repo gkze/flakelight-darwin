@@ -18,6 +18,7 @@
     flakelight ./. {
       nixDir = ./.;
       imports = [ flakelight.flakelightModules.extendFlakelight ];
+      templates = import ./templates;
       flakelightModule =
         { lib, ... }:
         {
